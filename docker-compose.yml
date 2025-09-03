@@ -1,0 +1,30 @@
+services:
+  gomw-gw:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gomw-gw
+    ports:
+      - "8080:8080"
+    networks:
+      - gomw-gw_network
+    environment:
+      ONCONNECT_URL: "http://mock-server:8080/onconnect"
+      DISCONNECT_URL: "http://mock-server:8080/disconnect"
+      LISTEN_ADDR: ":8080"
+    depends_on:
+      - mock-server
+
+  mock-server:
+    image: jmalloc/echo-server
+    container_name: mock-server
+    environment:
+      LOG_HTTP_BODY: "true"
+    ports:
+      - "8081:8080"
+    networks:
+      - gomw-gw_network
+
+
+networks:
+  gomw-gw_network:
