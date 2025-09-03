@@ -11,19 +11,22 @@ import (
 	"gomw-gw/app/internal/config"
 	"gomw-gw/app/internal/models"
 	"gomw-gw/app/pkg/logger"
+	"gomw-gw/app/pkg/network"
 )
 
 type WebhookService struct {
 	httpClient *http.Client
 	config     *config.WebhookConfig
+	serverInfo *network.ServerInfo
 }
 
-func NewWebhookService(cfg *config.WebhookConfig) *WebhookService {
+func NewWebhookService(cfg *config.WebhookConfig, serverConfig *config.ServerConfig) *WebhookService {
 	return &WebhookService{
 		httpClient: &http.Client{
 			Timeout: cfg.Timeout,
 		},
-		config: cfg,
+		config:     cfg,
+		serverInfo: network.GetServerInfo(serverConfig.ListenAddress),
 	}
 }
 
@@ -37,6 +40,8 @@ func (ws *WebhookService) NotifyConnection(session *models.Session) {
 		ClientIP:     session.ClientIP,
 		QueryParams:  session.QueryParams,
 		Timestamp:    session.ConnectedAt,
+		ServerIP:     ws.serverInfo.IP,
+		ServerPort:   ws.serverInfo.Port,
 	}
 
 	go ws.callWebhook(ws.config.OnConnectURL, payload, "connection")
@@ -51,6 +56,8 @@ func (ws *WebhookService) NotifyDisconnection(session *models.Session) {
 		ConnectionID: session.ID,
 		ClientIP:     session.ClientIP,
 		Timestamp:    time.Now(),
+		ServerIP:     ws.serverInfo.IP,
+		ServerPort:   ws.serverInfo.Port,
 	}
 
 	go ws.callWebhook(ws.config.OnDisconnectURL, payload, "disconnection")

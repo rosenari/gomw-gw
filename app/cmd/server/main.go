@@ -24,7 +24,7 @@ func main() {
 	})
 
 	sessionManager := services.NewSessionManager()
-	webhookService := services.NewWebhookService(&cfg.Webhook)
+	webhookService := services.NewWebhookService(&cfg.Webhook, &cfg.Server)
 
 	wsHandler := handlers.NewWebSocketHandler(&cfg.WebSocket, sessionManager, webhookService)
 	msgHandler := handlers.NewMessageHandler(sessionManager)

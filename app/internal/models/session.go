@@ -28,6 +28,8 @@ type WebhookPayload struct {
 	ClientIP     string       `json:"client_ip"`
 	QueryParams  url.Values   `json:"query_params,omitempty"`
 	Timestamp    time.Time    `json:"timestamp"`
+	ServerIP     string       `json:"server_ip"`
+	ServerPort   string       `json:"server_port"`
 }
 
 type EnvironmentInfo struct {

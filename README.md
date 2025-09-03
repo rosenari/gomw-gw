@@ -125,7 +125,9 @@ docker-compose up
   "connection_id": "uuid-string",
   "client_ip": "192.168.1.100",
   "query_params": {"param1": ["value1"]},
-  "timestamp": "2024-01-01T10:00:00Z"
+  "timestamp": "2024-01-01T10:00:00Z",
+  "server_ip": "10.0.1.100",
+  "server_port": "8080"
 }
 ```
 
@@ -134,6 +136,8 @@ docker-compose up
 {
   "connection_id": "uuid-string",
   "client_ip": "192.168.1.100",
-  "timestamp": "2024-01-01T10:05:00Z"
+  "timestamp": "2024-01-01T10:05:00Z",
+  "server_ip": "10.0.1.100",
+  "server_port": "8080"
 }
 ```
