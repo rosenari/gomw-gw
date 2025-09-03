@@ -2,6 +2,8 @@
 
 High Performance Go Mini WebSocket Gateway
 
+![Image](https://github.com/user-attachments/assets/3c181172-1e98-4eca-b43b-93082febd3f8)
+
 ## Environment Variable
 
 | name | description | default | required |
